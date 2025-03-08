@@ -1,7 +1,7 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -10,24 +10,46 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Dashboard() {
+interface Posts {
+    id: number;
+    title: string;
+    content: string;
+    image?: string;
+}
+
+export default function Posts() {
+
+    const { posts } = usePage<{posts: Posts[] }>().props;
+
+    const [isModelOpen, setIsModelOpen] = useState(false);
+    const [selectPost, setSelectPost] = useState(null);
+
+    const openModel = (post = null) => {
+        setIsModelOpen(true);
+        setSelectPost(post);
+    };
+
+    const handleDelete = (id: number) => {
+        router.delete(`/posts/${id}`,{
+            onSuccess: () => {
+                router.reload();
+                router.push('/posts');
+            },
+            onError: () => {
+                console.error('Error deleting post');
+            }
+        })
+    }
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                </div>
-                <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+            <Head title="Posts" />
+            <div className="flex flex-col gap-6 p-3 bg-white text-black shadow-lg rounded-xl">
+                <div className="flex justify-end">
+                     <button 
+                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded "
+                     onClick={() => openModel()} 
+                      >Create</button>                   
                 </div>
             </div>
         </AppLayout>
