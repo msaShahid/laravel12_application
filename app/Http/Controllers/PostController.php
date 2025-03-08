@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use Inertia\Inertia;
+use Inertia\Response;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -9,9 +12,9 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
-        //
+        return Inertia::render('Posts');
     }
 
     /**
