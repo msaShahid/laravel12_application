@@ -74,7 +74,6 @@ export default function PostFormModal({ isOpen, closeModal, post }: Props) {
           router.reload();
         },
         onError: (errors) => {
- 
           console.error(errors.message || "Failed to submit post.");
         },
       });

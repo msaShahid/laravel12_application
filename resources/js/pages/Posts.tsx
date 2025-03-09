@@ -3,8 +3,15 @@ import { Head, router, usePage } from "@inertiajs/react";
 import PostFormModal from "@/components/PostFormModal";
 import AppLayout from "@/layouts/app-layout";
 
+interface Post { 
+  id: number; 
+  title: string; 
+  content: string; 
+  image?: string 
+}
+
 export default function Posts() {
-  const { posts } = usePage<{ posts: { id: number; title: string; content: string; picture?: string }[] }>().props;
+  const { posts } = usePage<{ posts: Post[] }>().props;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
@@ -49,7 +56,7 @@ export default function Posts() {
               posts.map((post) => (
                 <tr key={post.id} className="border-b">
                   <td className="p-3">
-                    {post.picture ? <img src={post.picture} alt="Post" className="w-16 h-16 object-cover rounded-full" /> : "No Picture"}
+                    {post.image ? <img src={post.image} alt="Post" className="w-16 h-16 object-cover rounded-full" /> : "No Picture"}
                   </td>
                   <td className="p-3">{post.title}</td>
                   <td className="p-3">{post.content}</td>
@@ -67,6 +74,7 @@ export default function Posts() {
       </div>
 
       <PostFormModal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)} post={selectedPost} />
+
     </AppLayout>
   );
 }
