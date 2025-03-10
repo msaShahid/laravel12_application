@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -24,6 +25,10 @@ class TagsTableSeeder extends Seeder
             ['name' => 'Recipes'],
         ];
 
+        foreach ($tags as &$tag) {
+            $tag['slug'] = Str::slug($tag['name']); 
+            $tag['created_at'] = now(); 
+        }
         DB::table('tags')->insert($tags);
     }
 }

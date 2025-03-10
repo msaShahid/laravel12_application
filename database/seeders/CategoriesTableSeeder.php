@@ -21,6 +21,10 @@ class CategoriesTableSeeder extends Seeder
             ['name' => 'Food', 'slug' => 'food', 'description' => 'Delicious recipes, cooking tips, and food trends'],
         ];
 
+        foreach ($categories as &$category) {
+            $category['created_at'] = now(); 
+        }
+
         DB::table('categories')->insert($categories);
     }
 }
