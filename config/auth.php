@@ -46,6 +46,19 @@ return [
         ],
     ],
 
+    'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -69,15 +82,11 @@ return [
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
-        'admin' => [
+        'admins' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
