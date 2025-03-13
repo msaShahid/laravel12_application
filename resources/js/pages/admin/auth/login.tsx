@@ -99,7 +99,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                 <div className="text-muted-foreground text-center text-sm">
                     Don't have an account?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
+                    <TextLink href={route('admin.register')} tabIndex={5}>
                         Sign up
                     </TextLink>
                 </div>
