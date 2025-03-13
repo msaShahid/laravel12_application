@@ -53,8 +53,9 @@ Route::get('/admin', function () {
     return Inertia::render('admin/welcome');
 })->name('admin.home');
 
-Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('admin/dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
+    Route::get('/dashboard', function () { 
+        return Inertia::render('admin/dashboard');
+    })->name('admin.dashboard');
 });
+
