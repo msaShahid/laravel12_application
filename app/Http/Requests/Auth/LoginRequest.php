@@ -45,7 +45,7 @@ class LoginRequest extends FormRequest
         $remember = $this->boolean('remember');
     
         // Attempt login using web (user) guard
-        if (! Auth::guard('web')->attempt($credentials, $remember)) {
+        if (!Auth::guard('web')->attempt($credentials, $remember)) {
             RateLimiter::hit($this->throttleKey());
     
             throw ValidationException::withMessages([

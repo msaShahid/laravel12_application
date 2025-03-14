@@ -26,21 +26,28 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Handle an incoming authentication request. LoginRequest
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
-        $request->authenticate();
+        //$request->authenticate();
 
         $request->session()->regenerate();
 
-        $user = Auth::guard('admin')->user(); 
+        $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-        if ($user && $user->role === 'admin') { 
-            return redirect()->route('admin.dashboard');
+        // Attempt to log in the user
+        if (Auth::guard('web')->attempt($request->only('email', 'password'))) {
+            // Check if the user is an admin
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboard'); // Redirect to admin dashboard
+            }
+
+            return redirect()->route('dashboard'); // Redirect to regular user dashboard
         }
-    
-        return redirect()->route('admin.login');
     }
 
     /**
