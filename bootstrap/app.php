@@ -24,10 +24,12 @@ return Application::configure(basePath: dirname(__DIR__))
             AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        $middleware->alias([
-            'admin' => RedirectIfAuthenticated::class,
-            'auth' => Authenticate::class
+       // Authentication middleware aliases
+       $middleware->alias([
+            'auth' => Authenticate::class, 
+            'admin' => RedirectIfAuthenticated::class, 
         ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

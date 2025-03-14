@@ -36,29 +36,6 @@ export default function Welcome() {
                                 </Link>
                             </>
                         )}
-                        {auth.admin ? (
-                            <Link
-                                href={route('admin/dashboard')}
-                                className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
-                            >
-                              Admin  Dashboard
-                            </Link>
-                        ) : (
-                            <>
-                                <Link
-                                    href={route('admin.login')}
-                                    className="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
-                                >
-                                  Admin  Log in
-                                </Link>
-                                <Link
-                                    href={route('admin.register')}
-                                    className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
-                                >
-                                  Admin Register
-                                </Link>
-                            </>
-                        )}
                     </nav>
                 </header>
                 <div className="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">

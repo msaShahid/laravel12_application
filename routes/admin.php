@@ -1,6 +1,7 @@
 <?php
 
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
@@ -53,8 +54,9 @@ Route::get('/admin', function () {
     return Inertia::render('admin/welcome');
 })->name('admin.home');
 
-Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
-    Route::get('/dashboard', function () { 
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        dd(Auth::guard('admin')->user());
         return Inertia::render('admin/dashboard');
     })->name('admin.dashboard');
 });

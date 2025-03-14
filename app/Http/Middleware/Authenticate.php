@@ -17,33 +17,27 @@ class Authenticate
      */
     public function handle(Request $request, Closure $next, ...$guards): Response
     {
-        $guards = empty($guards) ? [null] : $guards;
+        if (empty($guards)) {
+            $guards = [null];
+        }
 
         foreach ($guards as $guard) {
-            // If authenticated with this guard, continue request
             if (Auth::guard($guard)->check()) {
-                Auth::shouldUse($guard);
+                Auth::shouldUse($guard); // Ensure correct guard is used
                 return $next($request);
             }
         }
 
-        // Handle unauthenticated session
-        throw new AuthenticationException(
-            'Unauthenticated', $guards, $this->redirectTo($request)
-        );
+        return redirect($this->redirectTo($request));
     }
 
-    /**
-     * Function to redirect based on user type
-     */
-    protected function redirectTo(Request $request)
+    protected function redirectTo($request)
     {
-        // If the request is for admin routes
         if ($request->is('admin/*')) {
             return route('admin.login');
         }
 
-        // Default to user login
         return route('login');
     }
+
 }
