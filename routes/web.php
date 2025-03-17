@@ -8,13 +8,15 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+
+    Route::resource('posts', PostController::class);
 });
 
-Route::resource('posts', PostController::class);
+
 
 
 require __DIR__.'/admin.php';
