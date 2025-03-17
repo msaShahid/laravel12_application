@@ -10,7 +10,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
-use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\admin\Auth\LoginRequest;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,26 +29,13 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request. LoginRequest
      */
-    public function store(Request $request): RedirectResponse
+    public function store(LoginRequest $request): RedirectResponse
     {
-        //$request->authenticate();
+        $request->authenticate();
 
         $request->session()->regenerate();
 
-        $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        // Attempt to log in the user
-        if (Auth::guard('web')->attempt($request->only('email', 'password'))) {
-            // Check if the user is an admin
-            if (Auth::user()->role === 'admin') {
-                return redirect()->route('admin.dashboard'); // Redirect to admin dashboard
-            }
-
-            return redirect()->route('dashboard'); // Redirect to regular user dashboard
-        }
+        return redirect()->intended(route('admin.dashboard', absolute: false));
     }
 
     /**
@@ -60,6 +48,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/admin');
+        return redirect('/admin/login');
     }
 }

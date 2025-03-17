@@ -56,7 +56,6 @@ Route::get('/admin', function () {
 
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
-        dd(Auth::guard('admin')->user());
         return Inertia::render('admin/dashboard');
     })->name('admin.dashboard');
 });
