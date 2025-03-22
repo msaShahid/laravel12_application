@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 
 export type Appearance = 'light' | 'dark' | 'system';
 
-// const prefersDark = () => {
-//     if (typeof window === 'undefined') {
-//         return false;
-//     }
+const prefersDark = () => {
+    if (typeof window === 'undefined') {
+        return false;
+    }
 
-//     return window.matchMedia('(prefers-color-scheme: dark)').matches;
-// };
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+};
 
 const setCookie = (name: string, value: string, days = 365) => {
     if (typeof document === 'undefined') {
@@ -20,8 +20,8 @@ const setCookie = (name: string, value: string, days = 365) => {
 };
 
 const applyTheme = (appearance: Appearance) => {
-    const isDark = appearance === 'dark' || (appearance === 'light' );
-    //&& prefersDark()
+    const isDark = appearance === 'dark' || (appearance === 'light' ) && prefersDark();
+    
     document.documentElement.classList.toggle('dark', isDark);
 };
 
